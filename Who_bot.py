@@ -1,4 +1,5 @@
-# this file permalink: https://github.com/FuhrerStein/WhoIsWorking_bot/raw/master/Who_bot.py
+# this file permalink: https://github.com/FuhrerStein/WhoIsWorking_bot/raw/master/Who_bot.py, https://bit.ly/2OHzezY
+
 
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
@@ -15,7 +16,7 @@ messages_list = ['На лінії',
                  'Робоча пауза - інше',
                  'Обід',
                  'Перерва',
-                 'Зміну завершено',
+                 'Кінець зміни',
 ]
 
 status_groups = {0: 'На лінії',
