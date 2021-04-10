@@ -4,7 +4,7 @@
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
-with open("Who.key") as who_file:
+with open("bot_key.key") as who_file:
     who_key = who_file.read()
 
 bot = telebot.TeleBot(who_key)
