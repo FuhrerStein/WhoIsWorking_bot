@@ -1,4 +1,4 @@
-# this file permalink: https://gist.github.com/FuhrerStein/337fd23fcb63f3a35b99d648a994b785
+# this file permalink: https://github.com/FuhrerStein/WhoIsWorking_bot/raw/master/Who_bot.py
 
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
