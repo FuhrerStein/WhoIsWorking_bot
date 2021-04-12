@@ -2,7 +2,9 @@
 
 
 import telebot
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove, User
+
+print("Starting bot...")
 
 with open("bot_key.key") as who_file:
     who_key = who_file.read()
@@ -55,12 +57,23 @@ def online_buttons():
     return markup
 
 
+def get_user_name(user: telebot.types.User):
+    if user.first_name:
+        if user.last_name:
+            return user.first_name + " " + user.last_name
+        else:
+            return user.first_name
+    elif user.last_name:
+        return user.last_name
+    elif user.username:
+        return user.username
+    else:
+        return "Unnamed alien"
+
+
 @bot.message_handler(commands=messages_db.keys())
 def send_status(message):
-    if message.from_user.first_name and message.from_user.last_name:
-        user_name = message.from_user.first_name + " " + message.from_user.last_name
-    else:
-        user_name = "Non-human"
+    user_name = get_user_name(message.from_user)
     command_clean = message.text[1:].split("@")[0]
     if command_clean in messages_db.keys():
         if messages_db[command_clean][0] == 3:
