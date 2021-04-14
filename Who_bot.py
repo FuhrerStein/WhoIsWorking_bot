@@ -97,7 +97,7 @@ def send_status(message):
 @bot.message_handler(commands=["info"])
 def send_info(message: telebot.types.Message):
     response = f"Chat ID: {message.chat.id}\n"
-    response += f"Active chats: {allow_chats}\n"
+    # response += f"Active chats: {allow_chats}\n"
     response += f"Bot here is {['Ina', 'A'][str(message.chat.id) in allow_chats]}ctive"
     bot.send_message(message.chat.id, response)
 
