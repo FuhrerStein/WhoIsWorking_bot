@@ -12,7 +12,7 @@ with open("bot_key.key") as who_file:
 with open("allow_chats.txt") as allow_file:
     allow_chats = allow_file.readlines()
 
-allow_chats = [line.strip for line in allow_chats]
+allow_chats = [line.strip() for line in allow_chats]
 
 print(f"Active chat IDs: {allow_chats}")
 
