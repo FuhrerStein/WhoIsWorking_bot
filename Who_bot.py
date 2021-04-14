@@ -9,6 +9,9 @@ print("Starting bot...")
 with open("bot_key.key") as who_file:
     who_key = who_file.read()
 
+with open("allow_chats.txt") as allow_file:
+    allow_chats = allow_file.readlines()
+
 bot = telebot.TeleBot(who_key)
 messages_list = ['На лінії',
                  'Робоча пауза - наряд',
@@ -73,6 +76,9 @@ def get_user_name(user: telebot.types.User):
 
 @bot.message_handler(commands=messages_db.keys())
 def send_status(message):
+    if not str(message.chat.id) in allow_chats:
+        return
+
     user_name = get_user_name(message.from_user)
     command_clean = message.text[1:].split("@")[0]
     if command_clean in messages_db.keys():
@@ -84,8 +90,17 @@ def send_status(message):
         bot.send_message(message.chat.id, message_text, reply_markup=online_buttons())
 
 
+@bot.message_handler(commands=["info"])
+def send_info(message: telebot.types.Message):
+    response = f"Chat ID: {message.chat.id}\n"
+    response += f"Bot here is {['Ina', 'A'][str(message.chat.id) in allow_chats]}ctive"
+    bot.send_message(message.chat.id, response)
+
+
 @bot.message_handler(commands=["кнопки", "buttons"])
 def send_status(message):
+    if not str(message.chat.id) in allow_chats:
+        return
     global buttons_shown
     if buttons_shown:
         buttons = ReplyKeyboardRemove()
@@ -101,7 +116,9 @@ def send_status(message):
 
 
 @bot.callback_query_handler(func=lambda call: True)
-def callback_query(call):
+def callback_query(call: telebot.types.CallbackQuery):
+    if not str(call.message.chat.id) in allow_chats:
+        return
     if call.data[:-1] == 'cb_group':
         target_category = int(call.data[-1])
         members_text = status_groups[target_category] + ": \n"
