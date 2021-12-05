@@ -17,7 +17,7 @@ allow_chats = [line.strip() for line in allow_chats]
 print(f"Active chat IDs: {allow_chats}")
 
 bot = telebot.TeleBot(who_key)
-messages_list = ['На лінії',
+messages_list = ['В лінії',
                  'Робоча пауза - наряд',
                  'Робоча пауза - дзвінок',
                  'Робоча пауза - пропущені',
@@ -28,7 +28,7 @@ messages_list = ['На лінії',
                  'Кінець зміни',
 ]
 
-status_groups = {0: 'На лінії',
+status_groups = {0: 'В лінії',
                  1: 'Робоча перерва',
                  2: 'Перерва',
                  }
@@ -91,7 +91,7 @@ def send_status(message):
         else:
             people_list[user_name] = command_clean
         message_text = user_name + "\n" + messages_db.get(command_clean, message.text)[1]
-        bot.send_message(message.chat.id, message_text, reply_markup=online_buttons())
+        bot.send_message(message.chat.id, message_text, disable_notification=True, reply_markup=online_buttons())
 
 
 @bot.message_handler(commands=["info"])
@@ -111,7 +111,7 @@ def send_status(message):
         buttons = ReplyKeyboardRemove()
         bot.send_message(message.chat.id, "Кнопки прибрано", reply_markup=buttons)
     else:
-        buttons = ReplyKeyboardMarkup(row_width=3)
+        buttons = ReplyKeyboardMarkup(row_width=3, resize_keyboard=True)
         buttons_list = []
         for key, name in messages_db.items():
             buttons_list.append(KeyboardButton("/" + key))
